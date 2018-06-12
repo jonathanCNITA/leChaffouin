@@ -3,18 +3,18 @@ $(document).ready( function(){
     
     //-- Construction du plateau
 
-    let nbCasesX = 6;
-    let nbCasesY = 6;
+    let nbCasesX = 4;
+    let nbCasesY = 4;
     let rowNum = 0;
-    let caseIndex = 0;
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
+    boardItems = shuffle(boardItems);
     let plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX)
 
     for(let y = 0; y < nbCasesY; y++) {
         $("#plateau").append('<div id="row'+ rowNum +'" class="row"></div>');
         for(let x = 0; x < nbCasesX; x ++) {
-            $("#row" + rowNum).append('<div id="'+ caseIndex + '"class="col-lg-2 case">'+ plateauInitial[y][x] + '</div>');
-            caseIndex++;
+            $("#row" + rowNum).append('<div id="'+ y + "-" + x + '"class="col-lg-2 case">'+ plateauInitial[y][x] + '</div>');
+        
             
         }
         rowNum++;
@@ -29,8 +29,6 @@ $(document).ready( function(){
             for(var j=0; j<=n; j++)
                 plateau [i][j] = i*j+i;
     }
-
-
 
 
     function affiche_tableau() {
