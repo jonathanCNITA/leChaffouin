@@ -3,11 +3,12 @@ $(document).ready( function(){
     
     //-- Construction du plateau
 
-    let nbCasesX = 4;
-    let nbCasesY = 4;
+    let nbCasesX = 3;
+    let nbCasesY = 3;
     let rowNum = 0;
-    let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
-    boardItems = shuffle(boardItems);
+    let boardItems = [1,2,"X",4,5,6,7,8,3];
+    // let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
+    // boardItems = shuffle(boardItems);
     let plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX)
 
     for(let y = 0; y < nbCasesY; y++) {
@@ -23,6 +24,7 @@ $(document).ready( function(){
     //-- Click
     $(".case").click(function() {
         console.log($(this).attr('id'));
+        console.log ("Position X", getEmptyCoord(plateauInitial,nbCasesX, nbCasesY ));
     });
 
     //--Fonction shuffle
@@ -48,6 +50,19 @@ $(document).ready( function(){
         }
         return board;
     }
+
+    function getEmptyCoord(tab, nbY, nbX){
+        let coordEmpty = [];
+        for (let y = 0; y < nbY; y++){
+            for (let x = 0; x < nbX; x++){
+                if (tab [y][x] === "X"){
+                    coordEmpty = [y,x];
+                }
+            }
+        }
+        return coordEmpty;
+    }
+    
 
 });
 
