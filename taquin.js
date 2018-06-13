@@ -10,7 +10,6 @@ $(document).ready(function () {
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
     boardItems[boardItems.length -1] = valueEmptyCase;
-
     // boardItems = shuffle(boardItems);
     let plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX)
     drawBoard();
