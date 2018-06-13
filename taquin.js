@@ -32,6 +32,13 @@ $(document).ready(function () {
             //-- Change l'affichage du board de la view
           afficheNewBoard();
         }
+
+        if(arrayEquality(boardItems, [].concat(...plateauInitial))){
+            $('#result').text("Bravo");
+        } else {
+            $('#result').text("Try again");
+        }
+        console.log("Win: ", arrayEquality(boardItems, [].concat(...plateauInitial)));
     });
 
     //--Bouton Mélanger
@@ -130,8 +137,19 @@ $(document).ready(function () {
         plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX);
         console.log("reset", plateauInitial)
         afficheNewBoard();
-        
     }
+
+    //-- Fonction qui test si le tableau actuel et egale au tableau référent
+    function arrayEquality(arrRef, arrActual) {
+        let isEqual = true;
+        for(let i = 0; i < arrRef.length; i++) {
+            if(arrRef[i] !== arrActual[i]) {
+                isEqual = false;
+            }
+        }
+        return isEqual;
+    }
+
 });
 
 
