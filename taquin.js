@@ -1,6 +1,6 @@
 $(document).ready(function () {
     console.log("Hi there this is jQuery");
-
+    // Welcome on dev2 branch
     //-- Construction du plateau
 
     let nbCasesX = 4;
