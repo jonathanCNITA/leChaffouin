@@ -5,11 +5,11 @@ $(document).ready(function () {
 
     let nbCasesX = 4;
     let nbCasesY = 4;
-    let rowNum = 0;
+
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
     boardItems[boardItems.length -1] = "X";
-     // boardItems = shuffle(boardItems);
+    // boardItems = shuffle(boardItems);
     let plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX)
     drawBoard();
     console.log("Position Empty", getEmptyCoord(plateauInitial, nbCasesX, nbCasesY));
@@ -58,6 +58,7 @@ $(document).ready(function () {
 
         }
     }
+
     //--Fonction shuffle
     function shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
@@ -81,6 +82,7 @@ $(document).ready(function () {
         }
         return board;
     }
+
     //--Fonction qui retourne les coordonnées de la case vide ici "X" au format y,x
     function getEmptyCoord(tab, nbY, nbX) {
         let coordEmpty = [];
@@ -96,6 +98,7 @@ $(document).ready(function () {
 
     //--fonction qui nous sert à dessiner le plateau initial au chargement de la page.
     function drawBoard() {
+        rowNum = 0;
         for (let y = 0; y < nbCasesY; y++) {
             $("#plateau").append('<div id="row' + rowNum + '" class="row"></div>');
             for (let x = 0; x < nbCasesX; x++) {
