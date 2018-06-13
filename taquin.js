@@ -61,6 +61,14 @@ $(document).ready(function () {
         afficheNewBoard();
     })
 
+    //-- Bouton change 1 valeur
+    $('#change50').on('click', function() {
+        for(let i = 0; i < 50; i++) {
+            plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, valueEmptyCase);
+        }
+        afficheNewBoard();
+    })
+
     //--Fonction qui lie le tableau de données à la vue.
     function afficheNewBoard() {
         console.log("afficheNewBoard",plateauInitial);
