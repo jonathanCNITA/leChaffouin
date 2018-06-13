@@ -38,6 +38,7 @@ $(document).ready(function () {
     $("#shuffle").on('click', function () {
         let flatPlateau = [].concat(...plateauInitial); // permet de dérouler le tableau en 1 ligne.
         let shuffledBoard = shuffle(flatPlateau);
+
         plateauInitial = createBoardGame(shuffledBoard, nbCasesY, nbCasesX);
         afficheNewBoard();
     });
