@@ -3,8 +3,8 @@ $(document).ready(function () {
     // Welcome on dev2 branch hello!
     //-- Construction du plateau
 
-    let nbCasesX = 3;
-    let nbCasesY = 3;
+    let nbCasesX = 4;
+    let nbCasesY = 4;
     const valueEmptyCase = " ";
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
@@ -173,7 +173,7 @@ $(document).ready(function () {
 
         for (let y = 0; y < nbY; y++) {
             for (let x = 0; x < nbX; x++) {
-                if(Switchable(emptyX, emptyY, x, y)) {
+                if(Switchable(emptyY, emptyX, x, y)) {
                     choiceAvailable.push([x,y]);
                 }
             }
