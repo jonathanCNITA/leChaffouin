@@ -1,6 +1,6 @@
 $(document).ready(function () {
     console.log("Hi there this is jQuery");
-
+    // Retour sur le dev_front
     //-- Construction du plateau
 
     let nbCasesX = 4;
