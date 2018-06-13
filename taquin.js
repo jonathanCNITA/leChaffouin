@@ -8,7 +8,6 @@ $(document).ready(function () {
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
-    boardItems[boardItems.length -1] = "X";
     // boardItems = shuffle(boardItems);
     let plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX)
     drawBoard();
@@ -28,7 +27,7 @@ $(document).ready(function () {
         if (Switchable(a, b, x, y)) {
             //-- Change valeur dans le tableau
             plateauInitial[b][a] = plateauInitial[y][x];
-            plateauInitial[y][x] = "X";
+            plateauInitial[y][x] = nbCasesX*nbCasesY;
             //-- Change l'affichage du board de la view
           afficheNewBoard();
         }
@@ -36,17 +35,17 @@ $(document).ready(function () {
 
     //--Bouton Mélanger
     $("#shuffle").on('click', function () {
-        let flatPlateau = [].concat(...plateauInitial); // permet de dérouler le tableau en 1 ligne.
+        let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
         let shuffledBoard = shuffle(flatPlateau);
-
         plateauInitial = createBoardGame(shuffledBoard, nbCasesY, nbCasesX);
         afficheNewBoard();
+        Winnable(shuffledBoard,getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0],getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY);
+
     });
-    
+
     //--Bouton Reset
     $("#reset").on('click', function(){
-        reset(); 
-        
+        reset();
     });
 
     //--Fonction qui lie le tableau de données à la vue.
@@ -54,47 +53,15 @@ $(document).ready(function () {
         console.log("afficheNewBoard",plateauInitial);
         for (let y = 0; y < nbCasesY; y++) {
             for (let x = 0; x < nbCasesX; x++) {
-                $("#" + y + "-" + x).text(plateauInitial[y][x]);
-            }
+                if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
+                    $("#" + y + "-" + x).text("Isa");
 
-        }
-    }
-
-    //--Fonction shuffle
-    function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-    }
-
-    //-- Fonction qui permet de retourner un tableau au format [[],[],[]....]
-    function createBoardGame(tab, nbY, nbX) {
-        let board = []; // on definit un plateau vide pour le moment
-        let index = 0; // on definit une variable index qui represente la valeur à assigner.
-        for (let y = 0; y < nbY; y++) { // y represente les lignes du board.
-            let xCase = []; // le tableau va contenir l'index des cases.
-            for (let x = 0; x < nbX; x++) {
-                xCase.push(tab[index]); // on pousse les données dans le tableau.
-                index++;
-            }
-            board.push(xCase);
-        }
-        return board;
-    }
-
-    //--Fonction qui retourne les coordonnées de la case vide ici "X" au format y,x
-    function getEmptyCoord(tab, nbY, nbX) {
-        let coordEmpty = [];
-        for (let y = 0; y < nbY; y++) {
-            for (let x = 0; x < nbX; x++) {
-                if (tab[y][x] === "X") {
-                    coordEmpty = [y, x];
+                }else{
+                    $("#" + y + "-" + x).text(plateauInitial[y][x]);
                 }
             }
+
         }
-        return coordEmpty;
     }
 
     //--fonction qui nous sert à dessiner le plateau initial au chargement de la page.
@@ -103,8 +70,8 @@ $(document).ready(function () {
         for (let y = 0; y < nbCasesY; y++) {
             $("#plateau").append('<div id="row' + rowNum + '" class="row"></div>');
             for (let x = 0; x < nbCasesX; x++) {
-                if (plateauInitial[y][x] === "X") {
-                    $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + plateauInitial[y][x] + '</div>');
+                if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
+                    $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + "Isa" + '</div>');
                 } else {
                     $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + plateauInitial[y][x] + '</div>');
                 }
@@ -113,25 +80,12 @@ $(document).ready(function () {
         }
     }
 
-    //--Fonction qui permet de vérifier les conditions de permutations.
-    function Switchable(a, b, x, y) {
-        console.log("a: ", a, " b: ", b);
-        console.log("x: ", x, " y: ", y);
-        let albert = Math.abs(a - x);// transforme la valeur en absolue.
-        let bertha = Math.abs(b - y);
-        if (albert + bertha == 1 && albert * bertha == 0) {
-            return true;
-        } else
-            return false;
-    }
-
     //--Fonction qui permet de revenir à un état initial
     function reset(){
         console.log("boarditems",boardItems);
         plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX);
-        console.log("reset", plateauInitial)
+        console.log("reset", plateauInitial);
         afficheNewBoard();
-        
     }
 });
 
