@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
-    boardItems[boardItems.length -1] = "X";
+    boardItems[boardItems.length -1] = " ";
     // boardItems = shuffle(boardItems);
     let plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX)
     drawBoard();
@@ -28,17 +28,19 @@ $(document).ready(function () {
         if (Switchable(a, b, x, y)) {
             //-- Change valeur dans le tableau
             plateauInitial[b][a] = plateauInitial[y][x];
-            plateauInitial[y][x] = "X";
+            plateauInitial[y][x] = " ";
             //-- Change l'affichage du board de la view
           afficheNewBoard();
         }
 
         if(arrayEquality(boardItems, [].concat(...plateauInitial))){
-            $('#result').text("Bravo");
+            $('#result').html("Bravo").css("background-color","lightgreen");
+           
         } else {
-            $('#result').text("Try again");
+            $('#result').text("Try again").css("background-color","pink");
+    
         }
-        console.log("Win: ", arrayEquality(boardItems, [].concat(...plateauInitial)));
+        console.log("Result: ", arrayEquality(boardItems, [].concat(...plateauInitial)));
     });
 
     //--Bouton Mélanger
@@ -95,7 +97,7 @@ $(document).ready(function () {
         let coordEmpty = [];
         for (let y = 0; y < nbY; y++) {
             for (let x = 0; x < nbX; x++) {
-                if (tab[y][x] === "X") {
+                if (tab[y][x] === " ") {
                     coordEmpty = [y, x];
                 }
             }
@@ -109,7 +111,7 @@ $(document).ready(function () {
         for (let y = 0; y < nbCasesY; y++) {
             $("#plateau").append('<div id="row' + rowNum + '" class="row"></div>');
             for (let x = 0; x < nbCasesX; x++) {
-                if (plateauInitial[y][x] === "X") {
+                if (plateauInitial[y][x] === "") {
                     $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + plateauInitial[y][x] + '</div>');
                 } else {
                     $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + plateauInitial[y][x] + '</div>');
