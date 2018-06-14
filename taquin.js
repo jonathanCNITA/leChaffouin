@@ -1,10 +1,10 @@
 $(document).ready(function () {
     console.log("Hi there this is jQuery");
-
+    //-- Starting dev3 branch
     //-- Construction du plateau
 
-    let nbCasesX = 4;
-    let nbCasesY = 4;
+    let nbCasesX = 3;
+    let nbCasesY = 3;
     let emptyCaseValueOnView = "  ";
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.

@@ -75,7 +75,7 @@ function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
     let emptyX = positionEmpty[1];
     let emptyY = positionEmpty[0];
 
-    
+
     for (let y = 0; y < nbY; y++) {
         for (let x = 0; x < nbX; x++) {
             if(Switchable(emptyY, emptyX, x, y)) {
@@ -83,7 +83,6 @@ function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
             }
         }
     }
-    
 
     // let choiceAvailable = getPossibleMoves(emptyX, emptyY, nbX, nbY);
     let selectedIndex = Math.floor(Math.random() * choiceAvailable.length);
