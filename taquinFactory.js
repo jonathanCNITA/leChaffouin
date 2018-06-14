@@ -127,12 +127,13 @@ a = NbEmptyMoves();
 function Winnable(tab,x,y,nbX,nbY) {
     nbMoves = nbBoxesPermutation(tab);
     if (NbEmptyMoves(x,y,nbX,nbY)%2 === nbMoves%2){
-
         console.log("Winnable"+nbMoves);
+        return true;
 
     }else{
+        console.log("Taste that DevilGame!!!!"+nbMoves);
+        return false;
 
-        console.log("Taste that DevilGame!!!!"+nbMoves)
     }
 
 }

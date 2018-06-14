@@ -65,14 +65,26 @@ $(document).ready(function () {
     //-- Bouton change 50 valeur
     $('#change50').on('click', function() {
         for(let i = 0; i < 50000; i++) {
-            let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
 
             plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         }
         afficheNewBoard();
     });
 
-    //--Fonction qui lie le tableau de données à la vue.
+    $('#isItSolvable').on('click', function() {
+        let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
+
+        if(Winnable(flatPlateau, getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0], getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY))
+        {
+            $('#solvable').html("Yes you can!!!").css("background-color","lightgreen");
+        } else {
+            $('#solvable').text("Try it if your mad!!!").css("background-color","pink");
+        }
+
+    });
+
+
+        //--Fonction qui lie le tableau de données à la vue.
     function afficheNewBoard() {
         console.log("afficheNewBoard",plateauInitial);
         for (let y = 0; y < nbCasesY; y++) {
