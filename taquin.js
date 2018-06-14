@@ -74,7 +74,7 @@ $(document).ready(function () {
         for (let y = 0; y < nbCasesY; y++) {
             for (let x = 0; x < nbCasesX; x++) {
                 if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
-                    $("#" + y + "-" + x).text("Isa");
+                    $("#" + y + "-" + x).text(emptyCaseValueOnView);
                 }else{
                     $("#" + y + "-" + x).text(plateauInitial[y][x]);
                 }
