@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     let nbCasesX = 4;
     let nbCasesY = 4;
+    let emptyCaseValueOnView = "Isa";
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
@@ -29,7 +30,7 @@ $(document).ready(function () {
             plateauInitial[b][a] = plateauInitial[y][x];
             plateauInitial[y][x] = nbCasesX*nbCasesY;
             //-- Change l'affichage du board de la view
-          afficheNewBoard();
+            afficheNewBoard();
         }
 
         if(arrayEquality(boardItems, [].concat(...plateauInitial))){
@@ -37,8 +38,6 @@ $(document).ready(function () {
         } else {
             $('#result').text("Try again").css("background-color","pink");
         }
-        console.log("Result: ", arrayEquality(boardItems, [].concat(...plateauInitial)));
-
     });
 
     //--Bouton Mélanger
@@ -48,7 +47,6 @@ $(document).ready(function () {
         plateauInitial = createBoardGame(shuffledBoard, nbCasesY, nbCasesX);
         afficheNewBoard();
         Winnable(shuffledBoard,getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0],getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY);
-
     });
 
     //--Bouton Reset
@@ -63,15 +61,17 @@ $(document).ready(function () {
          Winnable(flatPlateau,getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0],getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY);
 
          afficheNewBoard();
+
     });
 
-    //-- Bouton change 1 valeur
+    //-- Bouton change 50 valeur
     $('#change50').on('click', function() {
         for(let i = 0; i < 50; i++) {
             plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
             let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
             Winnable(flatPlateau,getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0],getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY);
 
+            plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         }
         afficheNewBoard();
     });
@@ -83,12 +83,10 @@ $(document).ready(function () {
             for (let x = 0; x < nbCasesX; x++) {
                 if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
                     $("#" + y + "-" + x).text("Isa");
-
                 }else{
                     $("#" + y + "-" + x).text(plateauInitial[y][x]);
                 }
             }
-
         }
     }
 
@@ -99,7 +97,7 @@ $(document).ready(function () {
             $("#plateau").append('<div id="row' + rowNum + '" class="row"></div>');
             for (let x = 0; x < nbCasesX; x++) {
                 if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
-                    $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + "Isa" + '</div>');
+                    $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + emptyCaseValueOnView + '</div>');
                 } else {
                     $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + plateauInitial[y][x] + '</div>');
                 }
