@@ -57,8 +57,6 @@ $(document).ready(function () {
      //-- Bouton change 1 valeur
      $('#change').on('click', function() {
         plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
-         let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
-         Winnable(flatPlateau,getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0],getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY);
 
          afficheNewBoard();
 
@@ -66,10 +64,8 @@ $(document).ready(function () {
 
     //-- Bouton change 50 valeur
     $('#change50').on('click', function() {
-        for(let i = 0; i < 50; i++) {
-            plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
+        for(let i = 0; i < 50000; i++) {
             let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
-            Winnable(flatPlateau,getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0],getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY);
 
             plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         }
