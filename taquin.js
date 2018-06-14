@@ -29,7 +29,7 @@ $(document).ready(function () {
             plateauInitial[b][a] = plateauInitial[y][x];
             plateauInitial[y][x] = nbCasesX*nbCasesY;
             //-- Change l'affichage du board de la view
-          afficheNewBoard();
+            afficheNewBoard();
         }
 
         if(arrayEquality(boardItems, [].concat(...plateauInitial))){
@@ -38,7 +38,6 @@ $(document).ready(function () {
             $('#result').text("Try again").css("background-color","pink");
         }
         console.log("Result: ", arrayEquality(boardItems, [].concat(...plateauInitial)));
-
     });
 
     //--Bouton Mélanger
@@ -48,7 +47,6 @@ $(document).ready(function () {
         plateauInitial = createBoardGame(shuffledBoard, nbCasesY, nbCasesX);
         afficheNewBoard();
         Winnable(shuffledBoard,getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0],getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1],nbCasesX,nbCasesY);
-
     });
 
     //--Bouton Reset
@@ -58,14 +56,16 @@ $(document).ready(function () {
 
      //-- Bouton change 1 valeur
      $('#change').on('click', function() {
-        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
+        console.log('Plateau avant', plateauInitial);
+        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
+        console.log('Plateau apres', plateauInitial);
         afficheNewBoard();
-    })
+    });
 
-    //-- Bouton change 1 valeur
+    //-- Bouton change 50 valeur
     $('#change50').on('click', function() {
         for(let i = 0; i < 50; i++) {
-            plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
+            plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         }
         afficheNewBoard();
     })
@@ -77,12 +77,10 @@ $(document).ready(function () {
             for (let x = 0; x < nbCasesX; x++) {
                 if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
                     $("#" + y + "-" + x).text("Isa");
-
                 }else{
                     $("#" + y + "-" + x).text(plateauInitial[y][x]);
                 }
             }
-
         }
     }
 
