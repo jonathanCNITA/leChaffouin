@@ -56,17 +56,21 @@ $(document).ready(function () {
 
      //-- Bouton change 1 valeur
      $('#change').on('click', function() {
-        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
-        afficheNewBoard();
+        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
+
+         afficheNewBoard();
+
     });
 
     //-- Bouton change 50 valeur
     $('#change50').on('click', function() {
-        for(let i = 0; i < 50; i++) {
+        for(let i = 0; i < 50000; i++) {
+            let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
+
             plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         }
         afficheNewBoard();
-    })
+    });
 
     //--Fonction qui lie le tableau de données à la vue.
     function afficheNewBoard() {

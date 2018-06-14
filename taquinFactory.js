@@ -45,20 +45,37 @@ function Switchable(a, b, x, y) {
         return false;
 }
 
+function getPossibleMoves(EmptyX,EmptyY,nbX,nbY) {
+    possibleMovesTab = [];
+    if (EmptyX + 1 < nbX -1){
+        moveRight = [EmptyX +1,EmptyY];
+        possibleMovesTab.push(moveRight);
+
+    }
+    if (EmptyX - 1 >= 0) {
+        moveLeft = [EmptyX - 1, EmptyY];
+        possibleMovesTab.push(moveLeft);
+
+    }
+    if (EmptyY - 1 >= 0) {
+        moveUp = [EmptyX, EmptyY - 1];
+        possibleMovesTab.push(moveUp);
+    }
+        if (EmptyY + 1 < nbY - 1) {
+            moveDown = [EmptyX, EmptyY + 1];
+            possibleMovesTab.push(moveDown);
+
+        }
+        return possibleMovesTab;
+}
 //-- Fonction qui deplace la case vide en fonction des choix possibles
 function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
-    let choiceAvailable = [];
     let positionEmpty = getEmptyCoord(tab2d, nbY, nbX);
     let emptyX = positionEmpty[1];
     let emptyY = positionEmpty[0];
 
-    for (let y = 0; y < nbY; y++) {
-        for (let x = 0; x < nbX; x++) {
-            if(Switchable(emptyY, emptyX, x, y)) {
-                choiceAvailable.push([x,y]);
-            }
-        }
-    }
+
+   let choiceAvailable = getPossibleMoves(emptyX, emptyY, 4, 4);
    
     let selectedIndex = Math.floor(Math.random() * choiceAvailable.length);
     let selectedCase = choiceAvailable[selectedIndex];
@@ -92,7 +109,6 @@ function nbBoxesPermutation(tab) {
                     tab[i] = tab[j];
                     tab[j] = c;
                     compteur++;
-                    console.log(("tabi  :  "+tab))
                 }
                 j++;
                 a++;
