@@ -45,6 +45,39 @@ function Switchable(a, b, x, y) {
         return false;
 }
 
+//-- Fonction qui deplace la case vide en fonction des choix possibles
+function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
+    let choiceAvailable = [];
+    let positionEmpty = getEmptyCoord(tab2d, nbY, nbX);
+    let emptyX = positionEmpty[1];
+    let emptyY = positionEmpty[0];
+
+    for (let y = 0; y < nbY; y++) {
+        for (let x = 0; x < nbX; x++) {
+            if(Switchable(emptyY, emptyX, x, y)) {
+                choiceAvailable.push([x,y]);
+            }
+        }
+    }
+   
+    let selectedIndex = Math.floor(Math.random() * choiceAvailable.length);
+    let selectedCase = choiceAvailable[selectedIndex];
+    tab2d[emptyY][emptyX] = tab2d[selectedCase[0]][selectedCase[1]];
+    tab2d[selectedCase[0]][selectedCase[1]] = emptyValue;
+    return tab2d
+}
+
+//-- Fonction qui test si le tableau actuel et egale au tableau référent
+function arrayEquality(arrRef, arrActual) {
+    let isEqual = true;
+    for(let i = 0; i < arrRef.length; i++) {
+        if(arrRef[i] !== arrActual[i]) {
+            isEqual = false;
+        }
+    }
+    return isEqual;
+}
+
 function nbBoxesPermutation(tab) {
     console.log(tab);
     let j = 0;

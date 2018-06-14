@@ -31,6 +31,14 @@ $(document).ready(function () {
             //-- Change l'affichage du board de la view
           afficheNewBoard();
         }
+
+        if(arrayEquality(boardItems, [].concat(...plateauInitial))){
+            $('#result').html("Bravo").css("background-color","lightgreen");
+        } else {
+            $('#result').text("Try again").css("background-color","pink");
+        }
+        console.log("Result: ", arrayEquality(boardItems, [].concat(...plateauInitial)));
+
     });
 
     //--Bouton Mélanger
@@ -47,6 +55,20 @@ $(document).ready(function () {
     $("#reset").on('click', function(){
         reset();
     });
+
+     //-- Bouton change 1 valeur
+     $('#change').on('click', function() {
+        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
+        afficheNewBoard();
+    })
+
+    //-- Bouton change 1 valeur
+    $('#change50').on('click', function() {
+        for(let i = 0; i < 50; i++) {
+            plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
+        }
+        afficheNewBoard();
+    })
 
     //--Fonction qui lie le tableau de données à la vue.
     function afficheNewBoard() {
