@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     let nbCasesX = 4;
     let nbCasesY = 4;
+    let emptyCaseValueOnView = "Isa";
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
@@ -88,7 +89,7 @@ $(document).ready(function () {
             $("#plateau").append('<div id="row' + rowNum + '" class="row"></div>');
             for (let x = 0; x < nbCasesX; x++) {
                 if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
-                    $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + "Isa" + '</div>');
+                    $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + emptyCaseValueOnView + '</div>');
                 } else {
                     $("#row" + rowNum).append('<div id="' + y + "-" + x + '"class="col-lg-2 case">' + plateauInitial[y][x] + '</div>');
                 }
