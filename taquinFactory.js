@@ -70,13 +70,22 @@ function getPossibleMoves(EmptyX,EmptyY,nbX,nbY) {
 }
 //-- Fonction qui deplace la case vide en fonction des choix possibles
 function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
+    let choiceAvailable = [];
     let positionEmpty = getEmptyCoord(tab2d, nbY, nbX);
     let emptyX = positionEmpty[1];
     let emptyY = positionEmpty[0];
 
+    
+    for (let y = 0; y < nbY; y++) {
+        for (let x = 0; x < nbX; x++) {
+            if(Switchable(emptyY, emptyX, x, y)) {
+                choiceAvailable.push([x,y]);
+            }
+        }
+    }
+    
 
-    let choiceAvailable = getPossibleMoves(emptyX, emptyY, nbY, nbX);
-   
+    // let choiceAvailable = getPossibleMoves(emptyX, emptyY, nbX, nbY);
     let selectedIndex = Math.floor(Math.random() * choiceAvailable.length);
     let selectedCase = choiceAvailable[selectedIndex];
     tab2d[emptyY][emptyX] = tab2d[selectedCase[0]][selectedCase[1]];

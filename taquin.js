@@ -3,8 +3,8 @@ $(document).ready(function () {
 
     //-- Construction du plateau
 
-    let nbCasesX = 3;
-    let nbCasesY = 3;
+    let nbCasesX = 4;
+    let nbCasesY = 4;
     let emptyCaseValueOnView = "  ";
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
@@ -56,13 +56,13 @@ $(document).ready(function () {
 
      //-- Bouton change 1 valeur
      $('#change').on('click', function() {
-        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, emptyCaseValueOnView);
+        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         afficheNewBoard();
     });
 
     //-- Bouton change 50 valeur
     $('#change50').on('click', function() {
-        for(let i = 0; i < 50000; i++) {
+        for(let i = 0; i < 50; i++) {
             plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         }
         afficheNewBoard();
