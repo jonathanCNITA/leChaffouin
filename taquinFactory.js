@@ -75,7 +75,7 @@ function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
     let emptyY = positionEmpty[0];
 
 
-   let choiceAvailable = getPossibleMoves(emptyX, emptyY, 4, 4);
+    let choiceAvailable = getPossibleMoves(emptyX, emptyY, nbY, nbX);
    
     let selectedIndex = Math.floor(Math.random() * choiceAvailable.length);
     let selectedCase = choiceAvailable[selectedIndex];

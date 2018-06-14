@@ -3,9 +3,9 @@ $(document).ready(function () {
 
     //-- Construction du plateau
 
-    let nbCasesX = 4;
-    let nbCasesY = 4;
-    let emptyCaseValueOnView = "Isa";
+    let nbCasesX = 3;
+    let nbCasesY = 3;
+    let emptyCaseValueOnView = "  ";
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
@@ -33,7 +33,7 @@ $(document).ready(function () {
             afficheNewBoard();
         }
 
-        if(arrayEquality(boardItems, [].concat(...plateauInitial))){
+        if(arrayEquality(boardItems, [].concat(...plateauInitial))) {
             $('#result').html("Bravo").css("background-color","lightgreen");
         } else {
             $('#result').text("Try again").css("background-color","pink");
@@ -50,22 +50,19 @@ $(document).ready(function () {
     });
 
     //--Bouton Reset
-    $("#reset").on('click', function(){
+    $("#reset").on('click', function() {
         reset();
     });
 
      //-- Bouton change 1 valeur
      $('#change').on('click', function() {
-        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, 16);
-
-         afficheNewBoard();
-
+        plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, emptyCaseValueOnView);
+        afficheNewBoard();
     });
 
     //-- Bouton change 50 valeur
     $('#change50').on('click', function() {
         for(let i = 0; i < 50000; i++) {
-
             plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
         }
         afficheNewBoard();
@@ -91,7 +88,7 @@ $(document).ready(function () {
             for (let x = 0; x < nbCasesX; x++) {
                 if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
                     $("#" + y + "-" + x).text(emptyCaseValueOnView);
-                }else{
+                } else {
                     $("#" + y + "-" + x).text(plateauInitial[y][x]);
                 }
             }
@@ -115,7 +112,7 @@ $(document).ready(function () {
     }
 
     //--Fonction qui permet de revenir à un état initial
-    function reset(){
+    function reset() {
         console.log("boarditems",boardItems);
         plateauInitial = createBoardGame(boardItems, nbCasesY, nbCasesX);
         console.log("reset", plateauInitial);
