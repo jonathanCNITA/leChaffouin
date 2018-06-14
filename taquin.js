@@ -37,7 +37,6 @@ $(document).ready(function () {
         } else {
             $('#result').text("Try again").css("background-color","pink");
         }
-        console.log("Result: ", arrayEquality(boardItems, [].concat(...plateauInitial)));
     });
 
     //--Bouton Mélanger
@@ -56,9 +55,7 @@ $(document).ready(function () {
 
      //-- Bouton change 1 valeur
      $('#change').on('click', function() {
-        console.log('Plateau avant', plateauInitial);
         plateauInitial = changeOnePosition(plateauInitial, nbCasesY, nbCasesX, nbCasesX*nbCasesY);
-        console.log('Plateau apres', plateauInitial);
         afficheNewBoard();
     });
 
