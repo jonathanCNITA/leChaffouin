@@ -11,10 +11,11 @@ function shuffle(a) {
 function createBoardGame(tab, nbX, nbY) {
     let board = []; // on definit un plateau vide pour le moment
     let index = 0; // on definit une variable index qui represente la valeur à assigner.
-    for (let y = 0; y < nbY; y++) { // y represente les lignes du board.
+    for (let x = 0; x < nbX; x++) {
         let xCase = []; // le tableau va contenir l'index des cases.
-        for (let x = 0; x < nbX; x++) {
-            xCase.push(tab[index]); // on pousse les données dans le tableau.
+            for (let y = 0; y < nbY; y++) { // y represente les lignes du board.
+
+                xCase.push(tab[index]); // on pousse les données dans le tableau.
             index++;
         }
         board.push(xCase);
@@ -25,8 +26,8 @@ function createBoardGame(tab, nbX, nbY) {
 //--Fonction qui retourne les coordonnées de la case vide ici "X" au format y,x
 function getEmptyCoord(tab, nbX, nbY) {
     let coordEmpty = [];
-    for (let y = 0; y < nbY; y++) {
         for (let x = 0; x < nbX; x++) {
+            for (let y = 0; y < nbY; y++) {
             if (tab[x][y] === nbX*nbY) {
                 coordEmpty = [x, y];
             }
@@ -47,7 +48,7 @@ function Switchable(a, b, x, y) {
 
 function getPossibleMoves(EmptyX,EmptyY,nbX,nbY) {
     let possibleMovesTab = [];
-    if (EmptyX + 1 < nbX -1){
+    if (EmptyX + 1 < nbX){
         moveRight = [EmptyX +1,EmptyY];
         console.log("R : ",moveRight);
         possibleMovesTab.push(moveRight);
@@ -62,7 +63,7 @@ function getPossibleMoves(EmptyX,EmptyY,nbX,nbY) {
         console.log("U : ",moveUp);
         possibleMovesTab.push(moveUp);
     }
-        if (EmptyY + 1 < nbY - 1) {
+        if (EmptyY + 1 < nbY) {
             moveDown = [EmptyX, EmptyY + 1];
             console.log("D : ",moveDown);
             possibleMovesTab.push(moveDown);
@@ -72,14 +73,27 @@ function getPossibleMoves(EmptyX,EmptyY,nbX,nbY) {
         console.log("posmovs : ",possibleMovesTab);
         return possibleMovesTab;
 }
+function getPossibleMove2(tab2D,emptyX,emptyY,nbX,nbY) {
+    let choiceAvailable = [];
+
+        for (let x = 0; x < nbX; x++) {
+            for (let y = 0; y < nbY; y++) {
+            if(Switchable(emptyX, emptyY, x, y)) {
+                choiceAvailable.push([x,y]);
+            }
+        }
+    }
+    return choiceAvailable;
+}
 //-- Fonction qui deplace la case vide en fonction des choix possibles
 function changeOnePosition(tab2d, nbX, nbY, emptyValue) {
     let positionEmpty = getEmptyCoord(tab2d, nbX, nbY);
     let emptyX = positionEmpty[1];
     let emptyY = positionEmpty[0];
 
+    let choiceAvailable = getPossibleMove2(tab2d,emptyX,emptyY,nbX,nbY);
+   //let choiceAvailable = getPossibleMoves(emptyX, emptyY, 4, 4);
 
-   let choiceAvailable = getPossibleMoves(emptyX, emptyY, 4, 4);
    
     let selectedIndex = Math.floor(Math.random() * choiceAvailable.length);
     let selectedCase = choiceAvailable[selectedIndex];

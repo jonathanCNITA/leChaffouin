@@ -5,12 +5,13 @@
 
     let nbCasesX = 4;
     let nbCasesY = 4;
-    let emptyCaseValueOnView = "Isa";
+    let emptyCaseValueOnView = "test";
 
     let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
     boardItems =  boardItems.map(value =>value+1);
     // boardItems = shuffle(boardItems);
     let plateauInitial = createBoardGame(boardItems, nbCasesX,nbCasesY);
+    console.log(plateauInitial);
     drawBoard();
     //console.log("Position Empty", getEmptyCoord(plateauInitial, nbCasesX, nbCasesY));
     //console.log(plateauInitial);
@@ -88,8 +89,8 @@
         //--Fonction qui lie le tableau de données à la vue.
     function afficheNewBoard() {
         //console.log("afficheNewBoard",plateauInitial);
-        for (let y = 0; y < nbCasesY; y++) {
             for (let x = 0; x < nbCasesX; x++) {
+                for (let y = 0; y < nbCasesY; y++) {
                 if (plateauInitial[x][y] === nbCasesX*nbCasesY) {
                     $("#" + x + "-" + y).text(emptyCaseValueOnView);
                 }else{
@@ -102,10 +103,10 @@
     //--fonction qui nous sert à dessiner le plateau initial au chargement de la page.
     function drawBoard() {
         rowNum = 0;
-        for (let y = 0; y < nbCasesY; y++) {
+        for (let x = 0; x < nbCasesX; x++) {
             $("#plateau").append('<div id="row' + rowNum + '" class="row"></div>');
-            for (let x = 0; x < nbCasesX; x++) {
-                if (plateauInitial[y][x] === nbCasesX*nbCasesY) {
+                for (let y = 0; y < nbCasesY; y++) {
+                    if (plateauInitial[x][y] === nbCasesX*nbCasesY) {
                     $("#row" + rowNum).append('<div id="' + x + "-" + y + '"class="col-lg-2 case">' + emptyCaseValueOnView + '</div>');
                 } else {
                     $("#row" + rowNum).append('<div id="' + x + "-" + y + '"class="col-lg-2 case">' + plateauInitial[x][y] + '</div>');
@@ -115,8 +116,8 @@
         }
     }
 
-    //--Fonction qui permet de revenir à un état initial
     function reset(){
+        //--Fonction qui permet de revenir à un état initial
         console.log("boarditems",boardItems);
         plateauInitial = createBoardGame(boardItems, nbCasesX, nbCasesY);
         console.log("reset", plateauInitial);
