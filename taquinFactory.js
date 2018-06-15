@@ -88,10 +88,10 @@ function getPossibleMove2(tab2D,emptyX,emptyY,nbX,nbY) {
 //-- Fonction qui deplace la case vide en fonction des choix possibles
 function changeOnePosition(tab2d, nbX, nbY, emptyValue) {
     let positionEmpty = getEmptyCoord(tab2d, nbX, nbY);
-    let emptyX = positionEmpty[1];
-    let emptyY = positionEmpty[0];
+    let emptyX = positionEmpty[0];
+    let emptyY = positionEmpty[1];
 
-    let choiceAvailable = getPossibleMove2(tab2d,emptyX,emptyY,nbX,nbY);
+    let choiceAvailable = getPossibleMoves(emptyX,emptyY,nbX,nbY);
    //let choiceAvailable = getPossibleMoves(emptyX, emptyY, 4, 4);
 
    
@@ -160,10 +160,10 @@ function Winnable(tab,x,y,nbX,nbY) {
 
 }
 function chercheurDeSolution(max, etat, profondeur){
-    etat = [winBoard, currentBoard]
+    etat = [winBoard, currentBoard];
     if (profondeur > max){
         return false;
-    }else if (arrayEquality()){
+    }else if (arrayEquality(etat)){
 }
 }
 

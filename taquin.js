@@ -126,9 +126,8 @@
         $("#test").click(function () {
             let emptyX = getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[0];
             let emptyY = getEmptyCoord(plateauInitial,nbCasesX,nbCasesY)[1];
-            console.log("y : ",emptyY);
-            console.log("x : ",emptyX);
-            console.log(getPossibleMoves(emptyX,emptyY,nbCasesX,nbCasesY));
+
+
         });
 
         });
