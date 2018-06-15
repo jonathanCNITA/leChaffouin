@@ -8,7 +8,7 @@ function shuffle(a) {
 }
 
 //-- Fonction qui permet de retourner un tableau au format [[],[],[]....]
-function createBoardGame(tab, nbY, nbX) {
+function createBoardGame(tab, nbX, nbY) {
     let board = []; // on definit un plateau vide pour le moment
     let index = 0; // on definit une variable index qui represente la valeur à assigner.
     for (let y = 0; y < nbY; y++) { // y represente les lignes du board.
@@ -23,12 +23,12 @@ function createBoardGame(tab, nbY, nbX) {
 }
 
 //--Fonction qui retourne les coordonnées de la case vide ici "X" au format y,x
-function getEmptyCoord(tab, nbY, nbX) {
+function getEmptyCoord(tab, nbX, nbY) {
     let coordEmpty = [];
     for (let y = 0; y < nbY; y++) {
         for (let x = 0; x < nbX; x++) {
-            if (tab[y][x] === nbX*nbY) {
-                coordEmpty = [y, x];
+            if (tab[x][y] === nbX*nbY) {
+                coordEmpty = [x, y];
             }
         }
     }
@@ -46,31 +46,35 @@ function Switchable(a, b, x, y) {
 }
 
 function getPossibleMoves(EmptyX,EmptyY,nbX,nbY) {
-    possibleMovesTab = [];
+    let possibleMovesTab = [];
     if (EmptyX + 1 < nbX -1){
         moveRight = [EmptyX +1,EmptyY];
+        console.log("R : ",moveRight);
         possibleMovesTab.push(moveRight);
-
     }
     if (EmptyX - 1 >= 0) {
         moveLeft = [EmptyX - 1, EmptyY];
+        console.log("L : ",moveLeft);
         possibleMovesTab.push(moveLeft);
-
     }
     if (EmptyY - 1 >= 0) {
         moveUp = [EmptyX, EmptyY - 1];
+        console.log("U : ",moveUp);
         possibleMovesTab.push(moveUp);
     }
         if (EmptyY + 1 < nbY - 1) {
             moveDown = [EmptyX, EmptyY + 1];
+            console.log("D : ",moveDown);
             possibleMovesTab.push(moveDown);
-
         }
+        console.log("X : ",EmptyX);
+    console.log("Y : ",EmptyY);
+        console.log("posmovs : ",possibleMovesTab);
         return possibleMovesTab;
 }
 //-- Fonction qui deplace la case vide en fonction des choix possibles
-function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
-    let positionEmpty = getEmptyCoord(tab2d, nbY, nbX);
+function changeOnePosition(tab2d, nbX, nbY, emptyValue) {
+    let positionEmpty = getEmptyCoord(tab2d, nbX, nbY);
     let emptyX = positionEmpty[1];
     let emptyY = positionEmpty[0];
 
@@ -79,20 +83,24 @@ function changeOnePosition(tab2d, nbY, nbX, emptyValue) {
    
     let selectedIndex = Math.floor(Math.random() * choiceAvailable.length);
     let selectedCase = choiceAvailable[selectedIndex];
-    tab2d[emptyY][emptyX] = tab2d[selectedCase[0]][selectedCase[1]];
+    tab2d[emptyX][emptyY] = tab2d[selectedCase[0]][selectedCase[1]];
     tab2d[selectedCase[0]][selectedCase[1]] = emptyValue;
     return tab2d
 }
 
+let nbCasesX = 4;
+let nbCasesY = 4;
+let boardItems = Array.from(Array(nbCasesX*nbCasesY).keys());// permet de créer un tableau en prenant les valeurs de X et Y.
+boardItems =  boardItems.map(value =>value+1);
 //-- Fonction qui test si le tableau actuel et egale au tableau référent
 function arrayEquality(arrRef, arrActual) {
-    let isEqual = true;
+
     for(let i = 0; i < arrRef.length; i++) {
         if(arrRef[i] !== arrActual[i]) {
-            isEqual = false;
+            return false;
         }
     }
-    return isEqual;
+    return true;
 }
 
 function nbBoxesPermutation(tab) {
@@ -137,7 +145,13 @@ function Winnable(tab,x,y,nbX,nbY) {
     }
 
 }
-
+function chercheurDeSolution(max, etat, profondeur){
+    etat = [winBoard, currentBoard]
+    if (profondeur > max){
+        return false;
+    }else if (arrayEquality()){
+}
+}
 
 
 
