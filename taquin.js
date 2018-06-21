@@ -14,11 +14,9 @@ $(document).ready(function () {
     console.log(plateauInitial);
     drawBoard();
     $("#test").on('click', function () {
-
-        findSolution(10, plateauInitial, 0);
-        console.log(plateauInitial);
-
-
+        solution = [];
+        let cunt = DFSearch(20, plateauInitial, 0);
+        console.log(cunt);
     });
     //-- Click sur la case qui récupere les coordonnées
 
@@ -26,8 +24,7 @@ $(document).ready(function () {
     //console.log(plateauInitial);
     //-- on utilise la fonction switchable pour vérifier la permutation.
     $(".case").click(function () {
-        console.log($(this).attr('id'));
-        console.log("Position X", getEmptyCoord(plateauInitial, nbCasesX, nbCasesY));
+
         //-- on récupere les coordonnées de la case vide et la cliquée($this)
         let a = getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[0];
         let b = getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[1];
@@ -74,7 +71,7 @@ $(document).ready(function () {
 
     //-- Bouton change 50 valeur
     $('#change50').on('click', function () {
-        for (let i = 0; i < 50000; i++) {
+        for (let i = 0; i < 5; i++) {
 
             plateauInitial = changeOnePosition(plateauInitial, nbCasesX, nbCasesY, nbCasesX * nbCasesY);
         }

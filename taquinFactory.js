@@ -93,7 +93,6 @@ function getPossibleMove2(tab2D, emptyX, emptyY, nbX, nbY) {
             }
         }
     }
-    console.log(choiceAvailable);
     return choiceAvailable;
 }
 
@@ -173,32 +172,37 @@ function Winnable(tab, x, y, nbX, nbY) {
 
 }
 
+function ToFlat(tab) {
+    return [].concat(...tab);
+
+}
+
 function emptyCaseCoord(tab) {
-    var emptyCase = tab.length ^ 2;
+    var emptyCase = tab.length * tab.length;
     for (var i = 0; i < tab.length; i++) {
         for (var j = 0; j < tab.length; j++) {
             if (tab[i][j] === emptyCase) {
-                return {x: i, y: j};
+                return {x: j, y: i};
             }
 
         }
     }
 }
 
-function swap(i, j, a, b, tab) {
+function swap(col1, row1, col2, row2, tab) {
 
-    var k = tab[i][j];
-    tab[i][j] = tab[a][b];
-    tab [a][b] = k;
+    var k = tab[row1][col1];
+    tab[row1][col1] = tab[row2][col2];
+    tab [row2][col2] = k;
 }
 
-function copyBoard(solidTab) {
+function copyBoard(solidBoard) {
     let boardCopy = []; // on definit un plateau vide pour le moment
-    for (let x = 0; x < solidTab.length; x++) {
+    for (let x = 0; x < solidBoard.length; x++) {
         boardCopy[x] = [];
-    }
-    for (let y = 0; y < solidTab.length; y++) { // y represente les lignes du board.
-        boardCopy[x][y] = solidTab[x][y];
+        for (let y = 0; y < solidBoard.length; y++) { // y represente les lignes du board.
+            boardCopy[x][y] = solidBoard[x][y];
+        }
     }
     return boardCopy;
 }
@@ -210,20 +214,20 @@ function Up(solidBoard) {
     //var emptyCaseValue = tempBoard[emptyCase[0]][emptyCase[1]];
     var upperCase = {x: emptyCase.x, y: emptyCase.y - 1};
     if (emptyCase.y - 1 >= 0) {
-        swap(emptyCase[0], emptyCase[1], upperCase.x, upperCase.y, tempBoard);
+        swap(emptyCase.x, emptyCase.y, upperCase.x, upperCase.y, tempBoard);
         return tempBoard;
     } else {
         return null;
     }
 }
 
-function down(solidBoard) {
-    var tempBoard = solidBoard;
+function Down(solidBoard) {
+    var tempBoard = copyBoard(solidBoard);
     var emptyCase = emptyCaseCoord(tempBoard);
     //var emptyCaseValue = tempBoard[emptyCase[0]][emptyCase[1]];
     var lowerCase = {x: emptyCase.x, y: emptyCase.y + 1};
     if (emptyCase.y + 1 < tempBoard.length) {
-        swap(emptyCase[0], emptyCase[1], lowerCase.x, lowerCase.y, tempBoard);
+        swap(emptyCase.x, emptyCase.y, lowerCase.x, lowerCase.y, tempBoard);
         return tempBoard;
     } else {
         return null;
@@ -231,12 +235,12 @@ function down(solidBoard) {
 }
 
 function Right(solidBoard) {
-    var tempBoard = solidBoard;
+    var tempBoard = copyBoard(solidBoard);
     var emptyCase = emptyCaseCoord(tempBoard);
     //var emptyCaseValue = tempBoard[emptyCase[0]][emptyCase[1]];
     var rightCase = {x: emptyCase.x + 1, y: emptyCase.y};
     if (emptyCase.x + 1 < tempBoard.length) {
-        swap(emptyCase[0], emptyCase[1], rightCase.x, rightCase.y, tempBoard);
+        swap(emptyCase.x, emptyCase.y, rightCase.x, rightCase.y, tempBoard);
         return tempBoard;
     } else {
         return null;
@@ -244,40 +248,75 @@ function Right(solidBoard) {
 }
 
 function Left(solidBoard) {
-    var tempBoard = solidBoard;
+    var tempBoard = copyBoard(solidBoard);
     var emptyCase = emptyCaseCoord(tempBoard);
-    //var emptyCaseValue = tempBoard[emptyCase[0]][emptyCase[1]];
-    var leftCase = {x: emptyCase.x + 1, y: emptyCase.y};
-    if (emptyCase.x - 1 <= 0) {
-        swap(emptyCase[0], emptyCase[1], leftCase.x, leftCase.y, tempBoard);
+    var leftCase = {x: emptyCase.x - 1, y: emptyCase.y};
+    if (emptyCase.x - 1 >= 0) {
+        swap(emptyCase.x, emptyCase.y, leftCase.x, leftCase.y, tempBoard);
         return tempBoard;
     } else {
         return null;
     }
 }
 
-function findSolution(max, currentBoard, profondeur) {
 
-    if (arrayEquality(boardItems, [].concat(...currentBoard))) {
-        console.log(currentBoard);
-        return;
-    }
-    if (profondeur > max) {
+let solution = [];
+let bestDepth = 100;
+
+function DFSearch(max, currentBoard, depth) {
+let bestMoves = [];
+
+findSolution(max, currentBoard, depth, bestMoves);
+
+return bestMoves;
+
+}
+function findSolution(max, currentBoard, depth, bestMoves) {
+    if (depth > Math.min(bestDepth, max)) {
         return false;
     }
-    let emptyX = getEmptyCoord(currentBoard, nbCasesX, nbCasesY)[0];
-    let emptyY = getEmptyCoord(currentBoard, nbCasesX, nbCasesY)[1];
-    let posMovTab = getPossibleMove2(currentBoard, emptyX, emptyY, nbCasesX, nbCasesY);
-    for (let i = 0; i <= posMovTab.length - 1; i++) {
-        let selectedCase = posMovTab[i];
-        var newBoard = currentBoard;
-        newBoard[emptyX][emptyY] = currentBoard[selectedCase[0]][selectedCase[1]];
-        newBoard[selectedCase[0]][selectedCase[1]] = nbCasesX * nbCasesY;
-        if (findSolution(max, newBoard, profondeur + 1)) {
-            return true;
+    let tempBoard = copyBoard(currentBoard);
+    if (arrayEquality(boardItems, [].concat(...tempBoard))) {
+        // console.log("lastBoard : " + ToFlat(tempBoard));
+        bestMoves.push([]);
+        for (let i = 0; i < solution.length; i++){
+            bestMoves[bestMoves.length - 1][i] = solution[i];
         }
-        return false;
+        bestDepth = depth;
+
     }
+    let nextState = [];
+    if (Up(tempBoard) != null && solution[solution.length-1] !== 'D') {
+        solution.push("U");
+        nextState = Up(tempBoard);
+        if(findSolution(max, nextState, depth + 1, bestMoves)){
+            return true;
+        }solution.pop();
+    }
+    if (Down(tempBoard) != null && solution[solution.length-1] !== 'U') {
+        solution.push("D");
+        nextState = Down(tempBoard);
+        if (findSolution(max, nextState, depth + 1,  bestMoves)){
+            return true;
+        }solution.pop();
+    }
+    if (Left(tempBoard) != null && solution[solution.length-1] !== 'R') {
+        solution.push("L");
+        nextState = Left(tempBoard);
+        if(findSolution(max, nextState, depth + 1,  bestMoves)){
+            return true;
+        }solution.pop();
+    }
+    if (Right(tempBoard) != null && solution[solution.length-1] !== 'L') {
+        solution.push("R");
+        nextState = Right(tempBoard);
+        if (findSolution(max, nextState, depth + 1,  bestMoves)){
+            return true;
+        }solution.pop();
+    }
+
+    return false;
+
 }
 
 
