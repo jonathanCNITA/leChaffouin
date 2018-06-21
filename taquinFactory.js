@@ -210,7 +210,8 @@ function Up(solidBoard) {
     //var emptyCaseValue = tempBoard[emptyCase[0]][emptyCase[1]];
     var upperCase = {x: emptyCase.x, y: emptyCase.y - 1};
     if (emptyCase.y - 1 >= 0) {
-        return swap(emptyCase[0], emptyCase[1], upperCase.x, upperCase.y, tempBoard);
+        swap(emptyCase[0], emptyCase[1], upperCase.x, upperCase.y, tempBoard);
+        return tempBoard;
     } else {
         return null;
     }
@@ -222,7 +223,8 @@ function down(solidBoard) {
     //var emptyCaseValue = tempBoard[emptyCase[0]][emptyCase[1]];
     var lowerCase = {x: emptyCase.x, y: emptyCase.y + 1};
     if (emptyCase.y + 1 < tempBoard.length) {
-        return swap(emptyCase[0], emptyCase[1], lowerCase.x, lowerCase.y, tempBoard);
+        swap(emptyCase[0], emptyCase[1], lowerCase.x, lowerCase.y, tempBoard);
+        return tempBoard;
     } else {
         return null;
     }
@@ -247,7 +249,8 @@ function Left(solidBoard) {
     //var emptyCaseValue = tempBoard[emptyCase[0]][emptyCase[1]];
     var leftCase = {x: emptyCase.x + 1, y: emptyCase.y};
     if (emptyCase.x - 1 <= 0) {
-        return swap(emptyCase[0], emptyCase[1], leftCase.x, leftCase.y, tempBoard);
+        swap(emptyCase[0], emptyCase[1], leftCase.x, leftCase.y, tempBoard);
+        return tempBoard;
     } else {
         return null;
     }
