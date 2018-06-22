@@ -1,10 +1,8 @@
 let plateauInitial = createBoardGame(boardItems, nbCasesX, nbCasesY);
 $(document).ready(function () {
-    console.log("Hi there this is jQuery");
 
     //-- Construction du plateau
     let nbCasesX = 4;
-
     let nbCasesY = 4;
     let emptyCaseValueOnView = "test";
 
@@ -13,18 +11,10 @@ $(document).ready(function () {
     // boardItems = shuffle(boardItems);
     console.log(plateauInitial);
     drawBoard();
-    $("#test").on('click', function () {
-        solution = [];
-        let cunt = DFSearch(20, plateauInitial, 0);
-        console.log(cunt);
-    });
-    //-- Click sur la case qui récupere les coordonnées
-
-    //console.log("Position Empty", getEmptyCoord(plateauInitial, nbCasesX, nbCasesY));
-    //console.log(plateauInitial);
+    //-- Click sur la case qui récupere les coordonnées 
     //-- on utilise la fonction switchable pour vérifier la permutation.
     $(".case").click(function () {
-
+        
         //-- on récupere les coordonnées de la case vide et la cliquée($this)
         let a = getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[0];
         let b = getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[1];
@@ -37,16 +27,16 @@ $(document).ready(function () {
             plateauInitial[x][y] = nbCasesX * nbCasesY;
             //-- Change l'affichage du board de la view
             afficheNewBoard();
-
+            
         }
         if (arrayEquality(boardItems, [].concat(...plateauInitial))) {
             $('#result').html("Bravo").css("background-color", "lightgreen");
         } else {
             $('#result').text("Try again").css("background-color", "pink");
         }
-
+        
     });
-
+    
     //--Bouton Mélanger
     $("#shuffle").on('click', function () {
         let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
@@ -55,42 +45,50 @@ $(document).ready(function () {
         afficheNewBoard();
         Winnable(shuffledBoard, getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[0], getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[1], nbCasesX, nbCasesY);
     });
-
+    
     //--Bouton Reset
     $("#reset").on('click', function () {
         reset();
     });
-
+    
     //-- Bouton change 1 valeur
     $('#change').on('click', function () {
         plateauInitial = changeOnePosition(plateauInitial, nbCasesX, nbCasesY, nbCasesY * nbCasesX);
-
+        
         afficheNewBoard();
-
+        
     });
-
+    
     //-- Bouton change 50 valeur
     $('#change50').on('click', function () {
         for (let i = 0; i < 5; i++) {
-
+            
             plateauInitial = changeOnePosition(plateauInitial, nbCasesX, nbCasesY, nbCasesX * nbCasesY);
         }
         afficheNewBoard();
     });
-
-
+    
+    //--Bouton qui verifie si le jeu est gagnable.
     $('#isItSolvable').on('click', function () {
         let flatPlateau = [].concat(...plateauInitial);// permet de dérouler le tableau en 1 ligne.
-
+        
         if (Winnable(flatPlateau, getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[0], getEmptyCoord(plateauInitial, nbCasesX, nbCasesY)[1], nbCasesX, nbCasesY)) {
             $('#solvable').html("Yes you can!!!").css("background-color", "lightgreen");
         } else {
             $('#solvable').text("Try it if you're mad!!!").css("background-color", "pink");
         }
-
+        
     });
+    
+    //--Bouton qui affiche la solution.
+        $("#test").on('click', function () {
+            solution = [];
+            let cunt = DFSearch(20, plateauInitial, 0);
+            console.log(cunt);
+            $('#solution').text(cunt[cunt.length -1]).css("background-color", "lightgrey");
+        });
+    
 
-    //console.log("afficheNewBoard",plateauInitial);
     function afficheNewBoard() {
         //--fonction qui nous sert à dessiner le plateau initial au chargement de la page.
         for (let x = 0; x < nbCasesX; x++) {
